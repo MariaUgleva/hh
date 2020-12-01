@@ -1,24 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import cards from './data.json';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppState} from './redux/reducers/rootReducer';
+import {loadCardsAction} from './redux/actions/AllCardsActions';
+import {FilterObjectRedux} from './type';
+import Header from './Components/Header';
+import Cards from './Components/Cards';
+import FiltersWindow from './Components/FiltersWindow';
 
-function App() {
+function App(): JSX.Element {
+  const dispatch = useDispatch();
+  const filters: FilterObjectRedux = useSelector((state: AppState) => state.filter);
+  useEffect(() => {dispatch(loadCardsAction(cards))}, [dispatch]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      {Object.keys(filters).find(item => filters[item].length > 0) ? <FiltersWindow /> : null}
+      <Cards />
     </div>
   );
 }

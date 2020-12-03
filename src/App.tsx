@@ -11,7 +11,7 @@ import FiltersWindow from './Components/FiltersWindow';
 function App(): JSX.Element {
   const dispatch = useDispatch();
   const filters: FilterObjectRedux = useSelector((state: AppState) => state.filter);
-  useEffect(() => {dispatch(loadCardsAction(cards))}, [dispatch]);
+  useEffect(() => {dispatch(loadCardsAction(cards))}, [dispatch, cards]);
   return (
     <div className="App">
       <Header />

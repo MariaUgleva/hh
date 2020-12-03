@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import { CardType } from "../../type";
 import { useDispatch } from "react-redux";
 import { setFilterAction } from "../../redux/actions/filterActions";
@@ -10,7 +10,7 @@ type PropType = {
 const Card: React.FC<PropType> = ({ data }): JSX.Element => {
   const dispatch = useDispatch();
   // отслеживаем нажатие на кнопку фильтра
-  const handlerButtonFilter = (
+  const handlerButtonFilter = useCallback((
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
     dispatch(
@@ -18,7 +18,7 @@ const Card: React.FC<PropType> = ({ data }): JSX.Element => {
         [event.currentTarget.name]: event.currentTarget.value,
       })
     );
-  };
+  }, [dispatch]);
   return (
     <div className="card">
       <div className="card__inner">
